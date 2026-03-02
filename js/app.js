@@ -376,11 +376,24 @@ const txt = "#111111";
 
   // ====== Boot ======
 async function init(){
-try {
-  CONFIG.blockedDates = await loadBlockedDates();
-} catch (e) {
-  console.log("Firestore no cargó; usando bloqueos demo:", e);
-}  wireTopCTA();
+async function hydrateAvailability(){
+  try {
+    const set = await loadBlockedDates();
+    if (set instanceof Set && set.size) {
+      CONFIG.blockedDates = set;
+    }
+    console.log("✅ CONFIG.blockedDates hydrated:", [...CONFIG.blockedDates]);
+  } catch (e) {
+    console.log("Firestore no cargó; usando bloqueos demo:", e);
+  }
+
+  // IMPORTANTE: repinta después de hidratar
+  renderCalendar();
+  updateSummary();
+}
+
+await hydrateAvailability(); 
+  wireTopCTA();
     wireGallery();
     wireCalendarNav();
     wireBooking();
