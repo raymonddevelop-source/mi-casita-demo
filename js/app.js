@@ -1,5 +1,6 @@
-(() => {
+import { loadBlockedDates } from "./js/calendar-firestore.js";
 
+(async () => {
   // ====== Placeholder generator (sin imágenes reales todavía) ======
   // (Movido arriba para que CONFIG pueda usar makePlaceholder sin error)
   function makePlaceholder(label){
