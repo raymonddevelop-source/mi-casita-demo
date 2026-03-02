@@ -1,4 +1,4 @@
-import { loadBlockedDates } from "./js/calendar-firestore.js";
+import { loadBlockedDates } from "./calendar-firestore.js";
 
 (async () => {
   // ====== Placeholder generator (sin imágenes reales todavía) ======
@@ -375,7 +375,8 @@ const txt = "#111111";
 
   // ====== Boot ======
 async function init(){
-  CONFIG.blockedDates = await loadBlockedDates();    wireTopCTA();
+  CONFIG.blockedDates = await loadBlockedDates();    
+  wireTopCTA();
     wireGallery();
     wireCalendarNav();
     wireBooking();
