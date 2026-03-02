@@ -334,12 +334,20 @@ console.log("✅ app.js cargó");
       };
 
       try {
-        const bookingId = await createBooking(payload);
-        msg.textContent = `✅ Reserva guardada: ${bookingId} • ${payload.checkin} → ${payload.checkout} • $${payload.total.toFixed(0)}.`;
-      } catch (err) {
-        console.error(err);
-        msg.textContent = "❌ Error guardando en Firestore. Mira la consola.";
-      }
+  const bookingId = await createBooking(payload);
+
+  // ✅ bloquea noches [checkin, checkout)
+  await blockDates(payload.checkin, payload.checkout);
+
+  // ✅ refresca disponibilidad y repinta
+  CONFIG.blockedDates = await loadBlockedDates();
+  renderCalendar();
+
+  msg.textContent = `✅ Reserva guardada y fechas bloqueadas: ${bookingId} • ${payload.checkin} → ${payload.checkout} • $${payload.total.toFixed(0)}.`;
+} catch (err) {
+  console.error(err);
+  msg.textContent = "❌ Error guardando/bloqueando en Firestore. Mira la consola.";
+}
     });
   }
 
