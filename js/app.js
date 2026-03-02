@@ -24,7 +24,10 @@
   <rect width="100%" height="100%" fill="${bg}"/>
   <rect width="100%" height="100%" fill="url(#r)"/>
   <rect x="60" y="60" width="${w-120}" height="${h-120}" rx="48" fill="url(#g)" stroke="rgba(255,255,255,0.10)"/>
-  <text x="110" y="170" fill="${txt}" font-size="52" font-family="ui-sans-serif, system-ui" font-weight="800">${escapeXml(CONFIG.propertyName)}</text>
+  
+<text x="110" y="170" fill="${txt}" font-size="52" font-family="ui-sans-serif, system-ui" font-weight="800">Mi Casita Demo</text>
+
+    
   <text x="110" y="240" fill="rgba(255,255,255,0.68)" font-size="30" font-family="ui-sans-serif, system-ui">${escapeXml(label)}</text>
   <text x="110" y="${h-110}" fill="rgba(255,255,255,0.55)" font-size="22" font-family="ui-sans-serif, system-ui">Placeholder • Replace with real photos</text>
 </svg>`;
