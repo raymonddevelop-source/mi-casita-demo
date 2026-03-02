@@ -294,12 +294,12 @@ console.log("✅ app.js cargó");
     if (next) next.addEventListener("click", () => { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1); renderCalendar(); });
   }
 
-  // ====== Booking (demo action) ======
+  // ====== Booking (save to Firestore) ======
   function wireBooking(){
     const form = $("bookingForm");
     if (!form) return;
 
-form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const msg = $("msg");
       msg.textContent = "";
@@ -331,22 +331,15 @@ form.addEventListener("submit", async (e) => {
         nights,
         total: nights * CONFIG.pricePerNight
       };
-  
-  try {
-  const bookingId = await createBooking(payload);
-  msg.textContent = `✅ Reserva guardada: ${bookingId} • ${payload.checkin} → ${payload.checkout} • $${payload.total.toFixed(0)}.`;
-} catch (err) {
-  console.error(err);
-  msg.textContent = "❌ Error guardando en Firestore. Mira la consola.";
-}
 
-try {
-  const bookingId = await createBooking(payload);
-  msg.textContent = `✅ Reserva guardada: ${bookingId} • ${payload.checkin} → ${payload.checkout} • $${payload.total.toFixed(0)}.`;
-} catch (err) {
-  console.error(err);
-  msg.textContent = "❌ Error guardando en Firestore. Mira la consola.";
-}    });
+      try {
+        const bookingId = await createBooking(payload);
+        msg.textContent = `✅ Reserva guardada: ${bookingId} • ${payload.checkin} → ${payload.checkout} • $${payload.total.toFixed(0)}.`;
+      } catch (err) {
+        console.error(err);
+        msg.textContent = "❌ Error guardando en Firestore. Mira la consola.";
+      }
+    });
   }
 
   // ====== UI helpers ======
@@ -382,10 +375,8 @@ try {
       }
     }
 
-    // 1) Primero carga disponibilidad
     await hydrateAvailability();
 
-    // 2) Luego wires + renders
     wireTopCTA();
     wireGallery();
     wireCalendarNav();
