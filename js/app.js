@@ -374,8 +374,8 @@ const txt = "#111111";
   }
 
   // ====== Boot ======
-  function init(){
-    wireTopCTA();
+async function init(){
+  CONFIG.blockedDates = await loadBlockedDates();    wireTopCTA();
     wireGallery();
     wireCalendarNav();
     wireBooking();
