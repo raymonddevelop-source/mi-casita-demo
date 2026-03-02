@@ -375,8 +375,11 @@ const txt = "#111111";
 
   // ====== Boot ======
 async function init(){
-  CONFIG.blockedDates = await loadBlockedDates();    
-  wireTopCTA();
+try {
+  CONFIG.blockedDates = await loadBlockedDates();
+} catch (e) {
+  console.log("Firestore no cargó; usando bloqueos demo:", e);
+}  wireTopCTA();
     wireGallery();
     wireCalendarNav();
     wireBooking();
