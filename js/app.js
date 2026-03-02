@@ -4,11 +4,10 @@
   // (Movido arriba para que CONFIG pueda usar makePlaceholder sin error)
   function makePlaceholder(label){
     const w = 1400, h = 900;
-    const bg = "#0b1022";
-const a0 = "#2ea8ff";
-const a1 = "#0b5cff";
-const txt = "#d7e3ff";
-
+  const bg = "#ffffff";
+const a0 = "#ff385c";   // rojo Airbnb-ish
+const a1 = "#ff385c";
+const txt = "#111111";
     const svg =
 `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
   <defs>
