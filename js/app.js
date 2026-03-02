@@ -22,7 +22,7 @@ const txt = "#111111";
   </defs>
   <rect width="100%" height="100%" fill="${bg}"/>
   <rect width="100%" height="100%" fill="url(#r)"/>
-  <rect x="60" y="60" width="${w-120}" height="${h-120}" rx="48" fill="url(#g)" stroke="rgba(255,255,255,0.10)"/>
+  <rect x="60" y="60" width="${w-120}" height="${h-120}" rx="48" fill="url(#g)" stroke="rgba(0,0,0,0.10)"/>
   
 <text x="110" y="170" fill="${txt}" font-size="52" font-family="ui-sans-serif, system-ui" font-weight="800">Mi Casita Demo</text>
 
