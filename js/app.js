@@ -299,7 +299,7 @@ console.log("✅ app.js cargó");
     const form = $("bookingForm");
     if (!form) return;
 
-    form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const msg = $("msg");
       msg.textContent = "";
