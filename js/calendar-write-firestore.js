@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 export async function blockDates(startYMD, endYMD) {
   const [sy, sm, sd] = startYMD.split("-").map(Number);
@@ -17,11 +17,9 @@ export async function blockDates(startYMD, endYMD) {
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, "0");
     const day = String(d.getDate()).padStart(2, "0");
-
     const ymd = `${y}-${m}-${day}`;
 
-    await addDoc(collection(db, "CALENDAR"), {
-      date: ymd
-    });
+    // ✅ docId = fecha (no duplica)
+    await setDoc(doc(db, "CALENDAR", ymd), { date: ymd }, { merge: true });
   }
 }
