@@ -3,7 +3,7 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/12.10.0/
 
 export async function loadBlockedDates() {
   const blocked = new Set();
-  const snap = await getDocs(collection(db, "calendar"));
+  const snap = await getDocs(collection(db, "CALENDAR"));
 
   snap.forEach((doc) => {
     const data = doc.data();
