@@ -340,8 +340,13 @@ form.addEventListener("submit", async (e) => {
   msg.textContent = "❌ Error guardando en Firestore. Mira la consola.";
 }
 
-      msg.textContent = `Reserva demo creada: ${payload.checkin} → ${payload.checkout} • $${payload.total.toFixed(0)}.`;
-    });
+try {
+  const bookingId = await createBooking(payload);
+  msg.textContent = `✅ Reserva guardada: ${bookingId} • ${payload.checkin} → ${payload.checkout} • $${payload.total.toFixed(0)}.`;
+} catch (err) {
+  console.error(err);
+  msg.textContent = "❌ Error guardando en Firestore. Mira la consola.";
+}    });
   }
 
   // ====== UI helpers ======
