@@ -1,15 +1,16 @@
-console.log("✅ app.js cargó");
 import { loadBlockedDates } from "./calendar-firestore.js";
 
-(async () => {
+console.log("✅ app.js cargó");
+
+(() => {
   // ====== Placeholder generator (sin imágenes reales todavía) ======
-  // (Movido arriba para que CONFIG pueda usar makePlaceholder sin error)
   function makePlaceholder(label){
     const w = 1400, h = 900;
-  const bg = "#ffffff";
-const a0 = "#ff385c";   // rojo Airbnb-ish
-const a1 = "#ff385c";
-const txt = "#111111";
+    const bg = "#ffffff";
+    const a0 = "#ff385c";
+    const a1 = "#ff385c";
+    const txt = "#111111";
+
     const svg =
 `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
   <defs>
@@ -25,12 +26,9 @@ const txt = "#111111";
   <rect width="100%" height="100%" fill="${bg}"/>
   <rect width="100%" height="100%" fill="url(#r)"/>
   <rect x="60" y="60" width="${w-120}" height="${h-120}" rx="48" fill="url(#g)" stroke="rgba(0,0,0,0.10)"/>
-  
-<text x="110" y="170" fill="${txt}" font-size="52" font-family="ui-sans-serif, system-ui" font-weight="800">Mi Casita Demo</text>
-
-    
-  <text x="110" y="240" fill="rgba(255,255,255,0.68)" font-size="30" font-family="ui-sans-serif, system-ui">${escapeXml(label)}</text>
-  <text x="110" y="${h-110}" fill="rgba(255,255,255,0.55)" font-size="22" font-family="ui-sans-serif, system-ui">Placeholder • Replace with real photos</text>
+  <text x="110" y="170" fill="${txt}" font-size="52" font-family="ui-sans-serif, system-ui" font-weight="800">Mi Casita Demo</text>
+  <text x="110" y="240" fill="rgba(0,0,0,0.55)" font-size="30" font-family="ui-sans-serif, system-ui">${escapeXml(label)}</text>
+  <text x="110" y="${h-110}" fill="rgba(0,0,0,0.40)" font-size="22" font-family="ui-sans-serif, system-ui">Placeholder • Replace with real photos</text>
 </svg>`;
     return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
   }
@@ -41,16 +39,12 @@ const txt = "#111111";
     }[c]));
   }
 
-  // ====== Config de template (fácil de convertir en plantilla) ======
+  // ====== Config ======
   const CONFIG = {
     propertyName: "Mi Casita Demo",
     pricePerNight: 165,
     minNights: 2,
-
-    // Placeholders: luego sustituyes por fotos reales (assets o URLs).
     photos: [
-      // Puedes reemplazar estas data-urls por tus imágenes en /assets
-      // Ej: "./assets/hero.jpg"
       makePlaceholder("Exterior • Noche"),
       makePlaceholder("Sala • Luz"),
       makePlaceholder("Cocina • Clean"),
@@ -58,8 +52,6 @@ const txt = "#111111";
       makePlaceholder("Baño • Minimal"),
       makePlaceholder("Terraza • View")
     ],
-
-    // Demo de fechas bloqueadas: YYYY-MM-DD
     blockedDates: new Set([
       "2026-03-06",
       "2026-03-07",
@@ -75,10 +67,6 @@ const txt = "#111111";
 
   function pad2(n){ return String(n).padStart(2, "0"); }
   function ymd(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
-  function parseYMD(s){
-    const [y,m,d] = s.split("-").map(Number);
-    return new Date(y, m-1, d);
-  }
   function addDays(date, days){
     const d = new Date(date);
     d.setDate(d.getDate() + days);
@@ -145,17 +133,18 @@ const txt = "#111111";
       side.appendChild(tile);
     });
 
+    grid.innerHTML = "";
     grid.appendChild(main);
     grid.appendChild(side);
   }
 
-  // ====== Calendar (demo) ======
+  // ====== Calendar ======
   const DOW = ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
   let viewMonth = new Date();
-  viewMonth.setDate(1);
+  viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1);
 
-  let checkIn = null;   // Date
-  let checkOut = null;  // Date
+  let checkIn = null;
+  let checkOut = null;
 
   function isBlocked(dateObj){
     return CONFIG.blockedDates.has(ymd(dateObj));
@@ -207,7 +196,6 @@ const txt = "#111111";
   function handleDayClick(dateObj){
     if (isBlocked(dateObj)) return;
 
-    // First click sets check-in
     if (!checkIn || (checkIn && checkOut)){
       checkIn = dateObj;
       checkOut = null;
@@ -216,7 +204,6 @@ const txt = "#111111";
       return;
     }
 
-    // Second click sets check-out (must be after check-in)
     if (dateObj <= checkIn){
       checkIn = dateObj;
       checkOut = null;
@@ -225,7 +212,6 @@ const txt = "#111111";
       return;
     }
 
-    // Proposed range [checkIn, dateObj)
     const res = canSelectRange(checkIn, dateObj);
     if (!res.ok){
       toast(res.reason);
@@ -248,14 +234,12 @@ const txt = "#111111";
     const last = new Date(year, month + 1, 0);
     const daysInMonth = last.getDate();
 
-    // Convert JS Sunday=0..Saturday=6 to Monday-first index
-    const jsDow = first.getDay(); // 0..6
+    const jsDow = first.getDay();        // 0..6
     const mondayIndex = (jsDow + 6) % 7; // Monday=0..Sunday=6
 
     const grid = document.createElement("div");
     grid.className = "cal-grid";
 
-    // Header DOW
     for (const d of DOW){
       const cell = document.createElement("div");
       cell.className = "cal-dow";
@@ -263,7 +247,6 @@ const txt = "#111111";
       grid.appendChild(cell);
     }
 
-    // Leading blanks
     for (let i = 0; i < mondayIndex; i++){
       const blank = document.createElement("div");
       blank.className = "cal-cell disabled";
@@ -271,10 +254,8 @@ const txt = "#111111";
       grid.appendChild(blank);
     }
 
-    // Days
     for (let day = 1; day <= daysInMonth; day++){
       const d = new Date(year, month, day);
-
       const cell = document.createElement("div");
       cell.className = "cal-cell";
 
@@ -282,10 +263,9 @@ const txt = "#111111";
       const selectedStart = isSameDay(d, checkIn);
       const selectedEnd = isSameDay(d, checkOut);
 
-      if (blocked) cell.classList.add("blocked");
+      if (blocked) cell.classList.add("blocked", "disabled");
       if (selectedStart || selectedEnd) cell.classList.add("selected");
       if (inRange(d)) cell.classList.add("inrange");
-      if (blocked) cell.classList.add("disabled");
 
       cell.innerHTML = `
         <div class="cal-num">${day}</div>
@@ -375,25 +355,24 @@ const txt = "#111111";
   }
 
   // ====== Boot ======
-async function init(){
-async function hydrateAvailability(){
-  try {
-    const set = await loadBlockedDates();
-    if (set instanceof Set && set.size) {
-      CONFIG.blockedDates = set;
+  async function init(){
+    async function hydrateAvailability(){
+      try {
+        const set = await loadBlockedDates();
+        if (set instanceof Set && set.size) {
+          CONFIG.blockedDates = set;
+        }
+        console.log("✅ CONFIG.blockedDates hydrated:", [...CONFIG.blockedDates]);
+      } catch (e) {
+        console.log("Firestore no cargó; usando bloqueos demo:", e);
+      }
     }
-    console.log("✅ CONFIG.blockedDates hydrated:", [...CONFIG.blockedDates]);
-  } catch (e) {
-    console.log("Firestore no cargó; usando bloqueos demo:", e);
-  }
 
-  // IMPORTANTE: repinta después de hidratar
-  renderCalendar();
-  updateSummary();
-}
+    // 1) Primero carga disponibilidad
+    await hydrateAvailability();
 
-await hydrateAvailability(); 
-  wireTopCTA();
+    // 2) Luego wires + renders
+    wireTopCTA();
     wireGallery();
     wireCalendarNav();
     wireBooking();
@@ -401,7 +380,6 @@ await hydrateAvailability();
     renderGallery();
     renderPhotoGrid();
     updateSummary();
-    renderCalendar();
 
     const now = new Date();
     viewMonth = new Date(now.getFullYear(), now.getMonth(), 1);
