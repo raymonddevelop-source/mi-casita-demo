@@ -1,3 +1,4 @@
+console.log("✅ app.js cargó");
 import { loadBlockedDates } from "./calendar-firestore.js";
 
 (async () => {
