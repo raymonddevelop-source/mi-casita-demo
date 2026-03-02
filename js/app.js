@@ -1,5 +1,6 @@
 import { loadBlockedDates } from "./calendar-firestore.js";
 import { createBooking } from "./bookings-firestore.js";
+import { blockDates } from "./calendar-write-firestore.js";
 
 console.log("✅ app.js cargó");
 
