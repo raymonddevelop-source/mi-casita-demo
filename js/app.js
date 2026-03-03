@@ -337,8 +337,8 @@ console.log("✅ app.js cargó");
       try {
   const bookingId = await createBooking(payload);
 
-  // ✅ bloquea noches [checkin, checkout)
-  await blockDates(payload.checkin, payload.checkout);
+  // ✅ bloquea noches (ATÓMICO: si alguna existe, falla)
+await holdDatesIfFree(payload.checkin, payload.checkout, bookingId);
 
   // ✅ refresca disponibilidad y repinta
   CONFIG.blockedDates = await loadBlockedDates();
