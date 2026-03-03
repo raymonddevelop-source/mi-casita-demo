@@ -48,7 +48,7 @@ console.log("✅ app.js cargó");
     pricePerNight: 165,
     minNights: 2,
     photos: [
-      makePlaceholder("Exterior • Noche"),
+"./assets/01-exterior.jpg",
       makePlaceholder("Sala • Luz"),
       makePlaceholder("Cocina • Clean"),
       makePlaceholder("Habitación • Calm"),
