@@ -1446,3 +1446,34 @@ img, .g-frame, .photo-main, .photo-tile, .calendar{
 body *{
   max-width: 100%;
 }
+/* =========================
+   Fix: calendario NO se recorta en móvil
+   Pega al final
+   ========================= */
+
+@media (max-width: 520px){
+  /* Permite que el grid de 7 columnas se encoja correctamente */
+  .cal-grid{
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    width: 100%;
+  }
+  .cal-cell, .cal-dow{
+    min-width: 0;          /* CLAVE: permite encoger */
+    padding: 8px 6px;      /* un poco más compacto */
+  }
+
+  /* Evita que el texto empuje el ancho */
+  .cal-num{ font-size: 12px; }
+  .cal-tag{
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Plan B: si algo no cabe, que el calendario scrollee SOLO por dentro */
+  .calendar{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
