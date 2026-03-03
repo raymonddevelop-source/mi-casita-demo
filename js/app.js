@@ -293,8 +293,7 @@ const blocked = isBlocked(d) || isPast(d);
     host.appendChild(grid);
 
     const mname = new Intl.DateTimeFormat("es-PR", { month:"long", year:"numeric" }).format(viewMonth);
-    $("calMeta").dataset.month = mname;
-  }
+$("calMeta").textContent = mname;  }
 
   function wireCalendarNav(){
     const prev = $("calPrev");
