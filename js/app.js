@@ -50,7 +50,7 @@ console.log("✅ app.js cargó");
     photos: [
 "./assets/01-exterior.jpg",
 "./assets/02-sala.jpg",
-      makePlaceholder("Cocina • Clean"),
+"./assets/03-cocina.jpg",
       makePlaceholder("Habitación • Calm"),
       makePlaceholder("Baño • Minimal"),
       makePlaceholder("Terraza • View")
