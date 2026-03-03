@@ -51,8 +51,8 @@ console.log("✅ app.js cargó");
 "./assets/01-exterior.jpg",
 "./assets/02-sala.jpg",
 "./assets/03-cocina.jpg",
-      makePlaceholder("Habitación • Calm"),
-"./assets/05-bano.jpg",
+"./assets/04-habitacion.jpg",
+      "./assets/05-bano.jpg",
       makePlaceholder("Terraza • View")
     ],
     blockedDates: new Set([
