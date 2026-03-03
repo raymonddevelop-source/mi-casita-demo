@@ -152,6 +152,13 @@ console.log("✅ app.js cargó");
   function isBlocked(dateObj){
     return CONFIG.blockedDates.has(ymd(dateObj));
   }
+  function isPast(dateObj){
+  const t = new Date();
+  t.setHours(0,0,0,0);
+  const d = new Date(dateObj);
+  d.setHours(0,0,0,0);
+  return d <= t; // pasado (hoy permitido)
+}
 
   function inRange(d){
     if (!checkIn || !checkOut) return false;
@@ -262,7 +269,7 @@ console.log("✅ app.js cargó");
       const cell = document.createElement("div");
       cell.className = "cal-cell";
 
-      const blocked = isBlocked(d);
+const blocked = isBlocked(d) || isPast(d);
       const selectedStart = isSameDay(d, checkIn);
       const selectedEnd = isSameDay(d, checkOut);
 
