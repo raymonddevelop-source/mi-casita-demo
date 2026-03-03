@@ -52,7 +52,7 @@ console.log("✅ app.js cargó");
 "./assets/02-sala.jpg",
 "./assets/03-cocina.jpg",
       makePlaceholder("Habitación • Calm"),
-      makePlaceholder("Baño • Minimal"),
+"./assets/05-bano.jpg",
       makePlaceholder("Terraza • View")
     ],
     blockedDates: new Set([
