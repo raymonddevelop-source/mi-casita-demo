@@ -49,7 +49,7 @@ console.log("✅ app.js cargó");
     minNights: 2,
     photos: [
 "./assets/01-exterior.jpg",
-      makePlaceholder("Sala • Luz"),
+"./assets/02-sala.jpg",
       makePlaceholder("Cocina • Clean"),
       makePlaceholder("Habitación • Calm"),
       makePlaceholder("Baño • Minimal"),
