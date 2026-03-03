@@ -1388,3 +1388,61 @@ label{
   .g-img{ height: 280px; }
   .thumb{ height: 58px; }
 }
+/* =========================
+   Fix iPhone: no side-scroll + calendar scale
+   Pega al final
+   ========================= */
+
+/* 1) Mata el scroll horizontal por overflow */
+html, body{
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Cualquier grid/flex que se estire, que pueda encoger */
+.wrap, .hero, .booking, .gallery, .grid-photos, .grid-cards{
+  min-width: 0;
+}
+
+/* Evita que imágenes/frames se salgan del viewport */
+img, .g-frame, .photo-main, .photo-tile, .calendar{
+  max-width: 100%;
+}
+
+/* 2) Ajuste móvil: el calendario estaba demasiado grande */
+@media (max-width: 520px){
+  .wrap{ padding-left: 12px; padding-right: 12px; }
+
+  /* Galería un poco más baja para balance */
+  .g-frame{ min-height: 240px; }
+  .g-img{ height: 240px; }
+
+  /* Calendario más compacto */
+  .calendar{ border-radius: 16px; }
+  .cal-dow{
+    padding: 10px 8px;
+    font-size: 11px;
+  }
+  .cal-cell{
+    padding: 9px 8px;
+    min-height: 46px;
+  }
+  .cal-num{ font-size: 13px; }
+  .cal-tag{ font-size: 10px; }
+
+  /* Si el label "No disponible" fuerza ancho, que no rompa layout */
+  .cal-tag{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Asegura que el grid no cause overflow por bordes */
+  .cal-grid{ width: 100%; }
+  .cal-cell, .cal-dow{ border-right-width: 0; }
+}
+
+/* 3) Extra: si algún elemento aún empuja el ancho, corta suavemente */
+body *{
+  max-width: 100%;
+}
