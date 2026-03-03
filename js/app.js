@@ -354,7 +354,7 @@ await holdDatesIfFree(payload.checkin, payload.checkout, bookingId);
   msg.textContent = `✅ Reserva guardada y fechas bloqueadas: ${bookingId} • ${payload.checkin} → ${payload.checkout} • $${payload.total.toFixed(0)}.`;
 } catch (err) {
   console.error(err);
-  msg.textContent = "❌ Error guardando/bloqueando en Firestore. Mira la consola.";
+msg.textContent = `❌ No se pudo reservar: ${err?.message || "fechas no disponibles"}.`;
 }
     });
   }
